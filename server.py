@@ -9,8 +9,8 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((host, port))
 server.listen()
 
-clients = ['*']
-aliases = ['*']
+clients = []
+aliases = []
 
 # Functions to hanlde clients connections
 
