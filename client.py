@@ -12,9 +12,15 @@ def client_receive():
             message = client.recv(1024).decode('utf-8')
             if message == 'alias':
                 client.send(bytes(alias,'utf-8'))
-                
+            
+            elif('You are now connected!' in message):
+                b = message[-22:]
+                c = message[0:-22]
+                print(c)
+                print(b)
             else:
                 print(message)
+                
         except:
             print('Error!')
             client.close()
