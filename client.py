@@ -11,7 +11,7 @@ def client_receive():
         try:
             message = client.recv(1024).decode('utf-8')
             if message == 'alias':
-                client.send(bytes(message,'utf-8'))
+                client.send(bytes(alias,'utf-8'))
                 
             else:
                 print(message)
