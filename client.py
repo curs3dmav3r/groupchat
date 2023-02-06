@@ -1,6 +1,6 @@
 import threading 
 import socket
-import sys
+
 alias = input('Choose an alias >>>')
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(('127.0.0.1', 8000))
@@ -12,12 +12,6 @@ def client_receive():
             message = client.recv(1024).decode('utf-8')
             if message == 'alias':
                 client.send(bytes(alias,'utf-8'))
-            
-            elif('You are now connected!' in message):
-                b = message[-22:]
-                c = message[0:-22]
-                print(c)
-                print(b)
             else:
                 print(message)
                 
@@ -30,7 +24,13 @@ def client_receive():
 def client_send():
     while True:
         message = f'{alias}: {input("")}'
-        client.send(message.encode('utf-8'))
+        if message[(len(alias)+2):].startswith("/"):
+            if message[(len(alias)+2):].startswith("/quit"):
+                client.send(f'REMOVE {alias}'.encode())
+            else:
+                print("No commands are allowed except: /quit")
+        else: 
+            client.send(message.encode('utf-8'))
 
 
 receive_thread = threading.Thread(target=client_receive)
